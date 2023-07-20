@@ -2,20 +2,18 @@ import React from 'react';
 import { useState, useEffect } from "react";
 
 export default function WeatherContainer () {
-    let [weatherData, setWeatherData] = useState<any>();
+    let [weatherData, setWeatherData] = useState<any>([]);
+    let [load, setLoad] = useState<boolean>(true);
     let [location, setLocation] = useState<string>("London")
     const getWeatherData = async (location : string) => {
-      try {
-        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${import.meta.env.VITE_API_KEY}`);
+        const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?key=${import.meta.env.VITE_API_KEY}&unitGroup=uk`)
         const data = await response.json();
-        console.log(data)
-        return data;
-      } catch (error) {
-        console.log(error)
-      }
+        setWeatherData(data);
+        setLoad(false);
     }
+
     useEffect(() => {
-      setWeatherData(getWeatherData(location));
+      getWeatherData(location);
     }, [])    
     return (
         <div className="weather-container">
@@ -26,7 +24,7 @@ export default function WeatherContainer () {
                 </div>
                 <div className="right-container">
                     <div className="degrees">
-                        2
+                        { load ? (<h1>Loading</h1>) : weatherData.currentConditions.temp}
                     </div>
                 </div>
             </div>
