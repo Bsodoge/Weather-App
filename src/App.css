@@ -41,8 +41,17 @@ main{
   font-size: 2rem;
 }
 
-.location{
+.location,
+.edit{
   font-size: 3rem;
+}
+
+.edit{
+  width: 30%;
+}
+
+.location::first-letter{
+  text-transform: capitalize;
 }
 
 .degrees{
@@ -159,7 +168,8 @@ main{
   .degrees-symbol{
     font-size: 2rem;
   }
-  .location{
+  .location,
+  .edit{
     font-size: 2rem;
   }
   .hourly{
